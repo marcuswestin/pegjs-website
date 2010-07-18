@@ -1,0 +1,127 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <meta charset="utf-8"> 
+    <meta name="author" content="David Majda (david@majda.cz)"> 
+    <meta name="copyright" content="Copyright &copy; 2010 David Majda"> 
+    <meta name="keywords" content="parser generator, PEG, JavaScript"> 
+    <meta name="description" content="PEG.js is a parser generator for JavaScript based on the parsing expression grammar formalism."> 
+    <title>Online Version &raquo; PEG.js &ndash; Parser Generator for JavaScript</title> 
+    <link rel="stylesheet" href="css/common.css"> 
+    <link rel="stylesheet" href="css/content.css"> 
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
+    <!--[if IE]>
+    <script>
+      var html5elements = ["aside", "footer", "header", "nav"];
+      for (var i = 0; i < html5elements.length; i++) {
+        document.createElement(html5elements[i]);
+      }
+    </script>
+    <![endif]--> 
+  </head> 
+  <body> 
+    <div id="content"> 
+      <table id="columns"> 
+  <tr> 
+    <td> 
+      <table class="column" id="left-column"> 
+        <tr> 
+          <td class="content-height"> 
+            <h2 class="suggestion top"> 
+              <span class="step-number">1</span> 
+              <div class="step-title">Write your PEG.js grammar</div> 
+            </h2> 
+          </td> 
+        </tr> 
+        <tr> 
+          <td> 
+            <div class="textarea-wrapper"> 
+              <textarea class="code" id="grammar" disabled>/*
+ * Classic example grammar, which recognizes simple arithmetic expressions like
+ * "2*(3+4)". The parser generated from this grammar then computes their value.
+ */
+ 
+start
+  = additive
+ 
+additive
+  = left:multiplicative "+" right:additive { return left + right; }
+  / multiplicative
+ 
+multiplicative
+  = left:primary "*" right:multiplicative { return left * right; }
+  / primary
+ 
+primary
+  = integer
+  / "(" additive:additive ")" { return additive; }
+ 
+integer "integer"
+  = digits:[0-9]+ { return parseInt(digits.join(""), 10); }</textarea> 
+            </div> 
+          </td> 
+        </tr> 
+        <tr> 
+          <td class="content-height"> 
+            <div id="build-message" class="message progress">Loading...</div> 
+          </td> 
+        </tr> 
+        <tr>
+            <td class="content-height">
+                <h2 class="bottom-header">Keep your grammars in localStorage</h2> 
+                <div class="bottom-content">
+                    <select id="grammar-select">
+                      <option selected>calculator</option>
+                    </select>
+                    <button id="grammar-add-button">add grammar</button>
+                    <button id="grammar-del-button">remove grammar</button>
+                    
+                </div> 
+            </td>
+        </tr>
+      </table> 
+    </td> 
+    <td> 
+      <table class="column" id="right-column"> 
+        <tr> 
+          <td class="content-height"> 
+            <h2 class="suggestion top"> 
+              <span class="step-number">2</span> 
+              <div class="step-title">Test the generated parser with some input</div> 
+            </h2> 
+          </td> 
+        </tr> 
+        <tr> 
+          <td> 
+            <div class="textarea-wrapper"> 
+              <textarea class="code" id="input" disabled>2*(3+4)</textarea> 
+            </div> 
+          </td> 
+        </tr> 
+        <tr> 
+          <td class="content-height"> 
+            <div id="parse-message" class="message disabled">Parser not available.</div> 
+          </td> 
+        </tr> 
+        <tr> 
+          <td class="content-height"> 
+            <h2 class="bottom-header">Output</h2> 
+            <div id="output" class="bottom-content disabled">Output not available.</div> 
+          </td> 
+        </tr> 
+      </table> 
+    </td> 
+  </tr> 
+</table> 
+ 
+<script src="vendor/store.js"></script> 
+<script src="vendor/jquery.js"></script> 
+<script src="vendor/compiler.js"></script> 
+<script src="vendor/metagrammar.js"></script> 
+<script src="vendor/webtoolkit.base64.js"></script> 
+<script src="vendor/jsDump.js"></script> 
+<script src="js/online.js"></script> 
+ 
+    </div> 
+  </body> 
+</html>
